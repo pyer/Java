@@ -1,4 +1,4 @@
-package ab;
+package ab.clients;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;

@@ -1,8 +1,8 @@
 package ab;
 
-import ab.FtpClient;
-import ab.JschClient;
-import ab.SftpClient;
+import ab.clients.FtpClient;
+import ab.clients.JschClient;
+import ab.clients.SftpClient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
