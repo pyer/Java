@@ -1,3 +1,13 @@
+# Generic files to ignore
+*~
+*.lock
+*.swp
+*.out
+*.properties
+
+# Maven target
+target
+
 # Compiled class file
 *.class
 
