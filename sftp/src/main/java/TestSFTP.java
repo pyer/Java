@@ -1,5 +1,6 @@
 package ab;
 
+import ab.Client;
 import ab.clients.FtpClient;
 import ab.clients.JschClient;
 import ab.clients.SftpClient;
@@ -26,6 +27,14 @@ public class TestSFTP
       return "09999999_" + dtf.print(LocalDateTime.now());
     }
 
+    private static void testSFTP(Client client, String path) {
+        client.connect();
+        client.changeDirectory(path);
+        client.listFiles(".");
+        client.uploadFile("pom.xml", targetName());
+        client.listFiles(".");
+        client.disconnect();
+    }
 
     public static void main(String[] args) {
 
@@ -44,48 +53,16 @@ public class TestSFTP
         int port=22;
 
         logger.info("Test Apache FTP");
-        FtpClient fclient = new FtpClient(host, port, username, password);
-        try {
-            fclient.connect();
-            fclient.changeDirectory(path);
-            fclient.listFiles(".");
-            fclient.uploadFile("pom.xml", targetName());
-            fclient.listFiles(".");
-            fclient.disconnect();
-        } catch (Exception e) {
-            logger.error("", e);
-        }
+        // for compatibility
+        testSFTP(new FtpClient(host, port, username, password), path);
 
         logger.info("Test Apache SFTP");
-        SftpClient sclient = new SftpClient(host, port, username, password);
-        try {
-            sclient.connect();
-            sclient.changeDirectory(path);
-            sclient.listFiles(".");
-            sclient.uploadFile("pom.xml", targetName());
-            sclient.listFiles(".");
-            sclient.disconnect();
-        } catch (Exception e) {
-            logger.error("", e);
-        }
+        testSFTP(new SftpClient(host, port, username, password), path);
 
         logger.info("Test Jcraft JSCH");
-        JschClient jclient = new JschClient(host, port, username, password);
-        jclient.connect();
-        try {
-            jclient.changeDirectory(path);
-            jclient.listFiles(".");
-            jclient.uploadFile("pom.xml", targetName());
-            jclient.listFiles(".");
+        testSFTP(new JschClient(host, port, username, password), path);
 
-        } catch (Exception e) {
-            logger.error("", e);
-        }
-        jclient.disconnect();
-
-        logger.debug("exit");
         System.exit(0);
     }
 }
-
 

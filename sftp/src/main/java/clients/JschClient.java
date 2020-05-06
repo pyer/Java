@@ -11,14 +11,13 @@ import com.jcraft.jsch.SftpException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
-
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Vector;
 
-
-public class JschClient {
+public class JschClient implements ab.Client {
     
     private final static Logger logger = LoggerFactory.getLogger(JschClient.class);
     
@@ -79,27 +78,33 @@ public class JschClient {
     /**
      * Change the current directory on the remote server
      * @param path String path on the remote server
-     * @throws SftpException if connection and channel are not available or if an error occurs during download.
      */
-    public void changeDirectory(String path) throws SftpException {
+    public void changeDirectory(String path) {
         logger.debug("Change directory to " + path);
-        connexion.cd(path);
+        try {
+            connexion.cd(path);
+        } catch (SftpException e) {
+            logger.error("", e);
+        }
     }
 
     /**
      * List files from the sftp server
      * @param path String path on the remote server
-     * @throws SftpException if connection and channel are not available or if an error occurs during download.
      */
-    public ArrayList<String> listFiles(String path) throws SftpException {
+    public ArrayList<String> listFiles(String path) {
         ArrayList<String> fileNames = new ArrayList<String>();
         logger.debug("List files:");
-        Vector<LsEntry> filesList = connexion.ls(path);
-        if(filesList != null) {
-             for(LsEntry entry : filesList) {
-                 fileNames.add(entry.getLongname());
-		             logger.debug(entry.getLongname());
-	           }
+        try {
+            Vector<LsEntry> filesList = connexion.ls(path);
+            if(filesList != null) {
+                for(LsEntry entry : filesList) {
+                    fileNames.add(entry.getLongname());
+		                logger.debug(entry.getLongname());
+	              }
+            }
+        } catch (SftpException e) {
+            logger.error("", e);
         }
         return fileNames;
     }
@@ -109,11 +114,14 @@ public class JschClient {
      * Uploads a file to the sftp server
      * @param sourceFile String path to sourceFile
      * @param destinationFile String path on the remote server
-     * @throws SftpException if connection and channel are not available or if an error occurs during upload.
      */
-    public void uploadFile(String sourceFile, String destinationFile) throws SftpException {
+    public void uploadFile(String sourceFile, String destinationFile) {
         logger.debug("Uploading file to server");
-        connexion.put(sourceFile, destinationFile);
+        try {
+            connexion.put(sourceFile, destinationFile);
+        } catch (SftpException e) {
+            logger.error("", e);
+        }
         logger.info("Upload successfull.");
     }
 
@@ -122,11 +130,14 @@ public class JschClient {
      * Retrieves a file from the sftp server
      * @param destinationFile String path to the remote file on the server
      * @param sourceFile String path on the local fileSystem
-     * @throws SftpException if connection and channel are not available or if an error occurs during download.
      */
-    public void retrieveFile(String sourceFile, String destinationFile) throws SftpException {
+    public void retrieveFile(String sourceFile, String destinationFile) {
         logger.debug("Downloading file to server");
-        connexion.get(sourceFile, destinationFile);
+        try {
+            connexion.get(sourceFile, destinationFile);
+        } catch (SftpException e) {
+            logger.error("", e);
+        }
         logger.info("Download successfull.");
     }
 
@@ -146,26 +157,4 @@ public class JschClient {
         }
     }
     
-/*
-    public static void main(String[] args) {
-        SftpClient client = new SftpClient();
-        client.setServer("localhost");
-        client.setPort(22);
-        client.setLogin("test");
-        client.setPassword("testPassword");
-
-        client.connect();
-
-        try {
-            client.uploadFile("src/main/resources/upload.txt", "/uploaded.txt");
-
-            client.retrieveFile("/uploaded.txt", "target/downloaded.txt");
-        } catch (InfinItException e) {
-            logger.error("", e);
-        } finally {
-            client.disconnect();
-        }
-    }
-*/
 }
-
