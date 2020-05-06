@@ -1,4 +1,4 @@
-package ab.clients;
+package ab.clients.apache;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,67 +9,61 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.InterruptedException;
 import java.net.SocketException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
-//import org.apache.commons.net.ftp.FTPSClient;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class FtpClient implements ab.Client {
+public class Common {
     
-    private final static Logger logger = LoggerFactory.getLogger(FtpClient.class);
+    private final static Logger logger = LoggerFactory.getLogger(Common.class);
     
-    private String server;
-    private int port;
-    private String login;
-    private String password;
-    
-    private FTPClient ftpClient = null;
-
     private static int DATA_TIMEOUT = 9000;
     private static int SOCKET_TIMEOUT = 9000;
 
     private int retryConnectionTime = 100;
     private int retryConnectionNumber = 3;
 
+    private FTPClient ftpClient = null;
 
-    public FtpClient(String server, int port, String login, String password) {
+    private String server;
+    private int port;
+    private String login;
+    private String password;
+    
+    public Common(String server, int port, String login, String password) {
         this.server = server;
         this.port = port;
         this.login = login;
         this.password = password;
     }
 
-    /**
-     * Connects to the server
-     */
-    public void connect() {
-        logger.debug("Initializing Apache FTP client");
+    protected void connecting(FTPClient ftp) {
         try {
-          ftpClient = new FTPClient();
+          ftpClient = ftp;
+          ftp.setConnectTimeout(SOCKET_TIMEOUT);
+          ftp.setDefaultTimeout(SOCKET_TIMEOUT);
+//          ftp.setSoTimeout(SOCKET_TIMEOUT);
+          ftp.setDataTimeout(DATA_TIMEOUT);
 
-          ftpClient.setConnectTimeout(SOCKET_TIMEOUT);
-          ftpClient.setDefaultTimeout(SOCKET_TIMEOUT);
+          ftp.connect(server);
+          ftp.login(login, password);
+          ftp.enterLocalPassiveMode();
+          logger.info(ftp.getReplyString());
 
-          //ftpClient.connect(server, port);
-          ftpClient.connect(server);
-          ftpClient.login(login, password);
-          ftpClient.enterLocalPassiveMode();
-          ftpClient.setSoTimeout(SOCKET_TIMEOUT);
-          ftpClient.setDataTimeout(DATA_TIMEOUT);
-
-          logger.info(ftpClient.getReplyString());
-
+//        } catch (NoSuchAlgorithmException e) {
+//          logger.error("NoSuchAlgorithm", e);
         } catch (SocketException e) {
           logger.error("Socket", e);
         } catch (IOException e) {
           logger.error("IO", e);
+        } catch (Exception e) {
+          logger.error("", e);
         }
     }
 

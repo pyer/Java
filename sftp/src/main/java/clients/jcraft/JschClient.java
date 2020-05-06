@@ -1,4 +1,4 @@
-package ab.clients;
+package ab.clients.jcraft;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -92,6 +92,7 @@ public class JschClient implements ab.Client {
      * List files from the sftp server
      * @param path String path on the remote server
      */
+    @SuppressWarnings("unchecked")
     public ArrayList<String> listFiles(String path) {
         ArrayList<String> fileNames = new ArrayList<String>();
         logger.debug("List files:");

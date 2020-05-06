@@ -1,9 +1,9 @@
 package ab;
 
 import ab.Client;
-import ab.clients.FtpClient;
-import ab.clients.JschClient;
-import ab.clients.SftpClient;
+import ab.clients.apache.AftpClient;
+import ab.clients.apache.SftpClient;
+import ab.clients.jcraft.JschClient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class TestSFTP
 
         logger.info("Test Apache FTP");
         // for compatibility
-        testSFTP(new FtpClient(host, port, username, password), path);
+        testSFTP(new AftpClient(host, port, username, password), path);
 
         logger.info("Test Apache SFTP");
         testSFTP(new SftpClient(host, port, username, password), path);
