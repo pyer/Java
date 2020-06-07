@@ -1,0 +1,40 @@
+<project>
+  <groupId>ab</groupId>
+  <artifactId>sftp</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+
+  <dependencies>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.25</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<!-- artifactId>slf4j-log4j12</artifactId -->
+				<artifactId>slf4j-simple</artifactId>
+				<version>1.7.25</version>
+			</dependency>
+      <dependency>
+        <groupId>com.jcraft</groupId>
+        <artifactId>jsch</artifactId>
+        <version>0.1.55</version>
+      </dependency>
+			<dependency>
+				<groupId>commons-net</groupId>
+				<artifactId>commons-net</artifactId>
+				<version>2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>2.4</version>
+			</dependency>
+  </dependencies>
+
+  <properties>
+    <mainClass>ab.TestSFTP</mainClass>
+  </properties>
+
+</project>
