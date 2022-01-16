@@ -3,9 +3,9 @@
   <groupId>ab</groupId>
   <artifactId>sftp</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
   <name>SFTP test</name>
-  <description>java -Dorg.slf4j.simpleLogger.defaultLogLevel=DEBUG -jar target/sftp-1.0-SNAPSHOT.jar </description>
+  <description>java -Dorg.slf4j.simpleLogger.defaultLogLevel=DEBUG -jar target/sftp-1.1-SNAPSHOT.jar </description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

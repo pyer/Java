@@ -6,11 +6,11 @@ import org.apache.commons.net.ftp.FTPSClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SftpClient extends ab.clients.apache.Common implements ab.Client {
+public class FtpsClient extends ab.clients.apache.Common implements ab.Client {
 
-    private final static Logger logger = LoggerFactory.getLogger(SftpClient.class);
+    private final static Logger logger = LoggerFactory.getLogger(FtpsClient.class);
 
-    public SftpClient(String server, int port, String login, String password) {
+    public FtpsClient(String server, int port, String login, String password) {
         super(server, port, login, password);
     }
 
