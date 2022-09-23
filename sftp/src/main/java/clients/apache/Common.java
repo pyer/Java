@@ -56,8 +56,6 @@ public class Common {
           ftp.enterLocalPassiveMode();
           logger.info(ftp.getReplyString());
 
-//        } catch (NoSuchAlgorithmException e) {
-//          logger.error("NoSuchAlgorithm", e);
         } catch (SocketException e) {
           logger.error("Socket", e);
         } catch (IOException e) {

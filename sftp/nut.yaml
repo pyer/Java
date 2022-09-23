@@ -1,0 +1,17 @@
+group:   ab
+name:    sftp
+version: 1.0 
+pattern: jar 
+
+mainClass: ab.TestSFTP
+
+dependencies:
+  - /org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar
+  - /org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar
+  - /com/jcraft/jsch/0.1.55/jsch-0.1.55.jar
+  - /commons-net/commons-net/3.8.0/commons-net-3.8.0.jar
+  - /joda-time/joda-time/2.11.1/joda-time-2.11.1.jar
+
+testDependencies:
+  - /org/testng/testng-6.8.7.jar
+  - /com/beust/jcommander-1.48.jar

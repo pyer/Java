@@ -1,6 +1,5 @@
 package ab.clients.apache;
 
-import java.security.NoSuchAlgorithmException;
 import org.apache.commons.net.ftp.FTPSClient;
 
 import org.slf4j.Logger;
@@ -22,8 +21,8 @@ public class FtpsClient extends ab.clients.apache.Common implements ab.Client {
         try {
           FTPSClient ftpClient = new FTPSClient();
           connecting(ftpClient);
-        } catch (NoSuchAlgorithmException e) {
-          logger.error("NoSuchAlgorithm", e);
+        } catch (Exception e) {
+          logger.error(e.getMessage(), e);
         }
     }
 
